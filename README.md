@@ -7,21 +7,21 @@ The objective is to understand how to build new modules for the [`Technology Zon
 ## 2. What does the project do?
 
 This project does inspect the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops) and needs to be seen in combination with the [gitops-verify-swagger-editor-example](https://github.com/thomassuedbroecker/gitops-verify-swagger-editor-example) outcome.
-The repository documents how to create a module for [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/) `step-by-step` using the [helm guestbook application example](https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook) from the Argo CD GitHub repository.
+The repository documents how to create a module for [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/) `step-by-step` using the [helm helloworld-with-ubi-helm application example](https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook) from the Argo CD GitHub repository.
 
 ### 2.1 Understand the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops)
 
 The [`template-terraform-gitops`](https://github.com/cloud-native-toolkit/template-terraform-gitops) is a part of the `How to` instructions of the [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/). 
 The module covers the [GitOps topic](https://modules.cloudnativetoolkit.dev/#/how-to/gitops).
 
-## 3. Use the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops) to create a module to deploy the guestbook example
+## 3. Use the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops) to create a module to deploy the helloworld-with-ubi-helm example
 
 These are the main tasks:
 
 1. Create a GitHub repository based on the `gitops template` from `Software Everywhere`
-2. Configure the `guestbook` `module`
-3. Create an own `catalog` for the `guestbook` `module`
-4. Create a [`BOM`(Bill of material)](https://github.com/cloud-native-toolkit/iascable#bom-spec) where the `guestbook` `module` is used and create the needed terraform output with `iascable`
+2. Configure the `helloworld-with-ubi-helm` `module`
+3. Create an own `catalog` for the `helloworld-with-ubi-helm` `module`
+4. Create a [`BOM`(Bill of material)](https://github.com/cloud-native-toolkit/iascable#bom-spec) where the `helloworld-with-ubi-helm` `module` is used and create the needed terraform output with `iascable`
 
 We will use later two catalogs and one `BOM` (Bill of material). here is a simplified view of the depencencies we will have later.
 
@@ -31,7 +31,7 @@ We will use later two catalogs and one `BOM` (Bill of material). here is a simpl
 
 ### 3.1.1 Create a new GitHub repository based on the `gitops template`
 
-We clone the [`gitops template` repository](https://github.com/cloud-native-toolkit/template-terraform-gitops) to our local computer and we going to create our [`gitops-terraform-guestbook`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook) repository.
+We clone the [`gitops template` repository](https://github.com/cloud-native-toolkit/template-terraform-gitops) to our local computer and we going to create our [`helloworld-with-ubi-helm`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm) repository.
 
 #### Step 1: Clone the GitHub [`gitops template` repository](https://github.com/cloud-native-toolkit/template-terraform-gitops) to your local computer and create a new GitHub repository based on that template
 
@@ -91,18 +91,18 @@ In this example we use the unsupport container engine [colima](https://github.co
 brew install colima
 ``` 
 
-## 4. Implement the new `guestbook` module 
+## 4. Implement the new `helloworld-with-ubi-helm` module 
 
 In that section we will modify files in our newly created repository. These are the relevant files for our new module.
 
-* The [`main.tf`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/main.tf) file
-* The [`variable.tf`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/variables.tf) file
-* The [`helm chart`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/tree/main/chart/helm-guestbook) content
-* The [`module.yaml`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/module.yaml) file
+* The [`main.tf`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/main.tf) file
+* The [`variable.tf`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/variables.tf) file
+* The [`helm chart`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/tree/main/chart/helm-guestbook) content
+* The [`module.yaml`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/module.yaml) file
 * Configure the `helm chart` copy automation in the `scripts/create-yaml.sh` file
-* Create for [`gitops-terraform-guestbook` GitHub repository `tags` and `releases`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/tags)
+* Create for [`helloworld-with-ubi-helm` GitHub repository `tags` and `releases`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/tags)
 
-### 4.1 The [`main.tf`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/main.tf) file
+### 4.1 The [`main.tf`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/main.tf) file
 
 #### Step 1:  Do some modifications in the `main.tf` file
 
@@ -124,7 +124,7 @@ In that section we will modify files in our newly created repository. These are 
   }
   ```
 
-  These are the values we need to insert for our guestbook application as variables for the helm-chart. You find the variables in the Argo CD github project for the helm guestbook application [values.yaml](https://github.com/argoproj/argocd-example-apps/blob/master/helm-guestbook/values.yaml)
+  These are the values we need to insert for our helloworld-with-ubi-helm application as variables for the helm-chart. You find the variables in the Argo CD github project for the helm helloworld-with-ubi-helm application [values.yaml](https://github.com/argoproj/argocd-example-apps/blob/master/helm-guestbook/values.yaml)
 
   Now replace the `// create entry` with the needed values.
 
@@ -159,7 +159,7 @@ locals {
   yaml_dir      = "${path.cwd}/.tmp/${local.name}/chart/${local.name}"
   service_url   = "http://${local.name}.${var.namespace}"
   values_content = {
-    helm_guestbook = {
+    helm_ubihelm = {
       // create entry
     }
   }
@@ -171,9 +171,9 @@ locals {
 }
 ```
 
-### 4.2 The [`variable.tf`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/variables.tf) file
+### 4.2 The [`variable.tf`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/variables.tf) file
 
-#### Step 1: Add some variables in the [`variable.tf`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/variables.tf) file
+#### Step 1: Add some variables in the [`variable.tf`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/variables.tf) file
 
 ```hcl
 variable "cluster_type" {
@@ -182,11 +182,11 @@ variable "cluster_type" {
 }
 ```
 
-### 4.3 The [`helm chart`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/tree/main/chart/helm-guestbook) content
+### 4.3 The [`helm chart`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/tree/main/chart/helm-guestbook) content
 
-#### Step 1: Create a new folder structure for the `guestbook helm chart`
+#### Step 1: Create a new folder structure for the `helloworld-with-ubi-helm helm chart`
 
-* Create following folder structure `chart/helm-guestbook`.
+* Create following folder structure `chart/ubi-helm`.
   The name after chart must be the module name.
 
 ```sh
@@ -204,7 +204,7 @@ variable "cluster_type" {
     │       └── values.yaml
 ```
 
-That will be the resulting folder structure for the `guestbook module` on your local pc:
+That will be the resulting folder structure for the `helloworld-with-ubi-helm module` on your local pc:
 
 ```sh
 ├── LICENSE
@@ -323,12 +323,12 @@ spec:
             periodSeconds: 5
 ```
 
-### 4.4 The [`module.yaml`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/module.yaml) file
+### 4.4 The [`module.yaml`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/module.yaml) file
 
 #### Step 1: Edited the `module.yaml` 
 
 * Use for `name`: `helloworld-with-ubi-helm`
-* Use for `description`: `That module will add a new Argo CD config to deploy the guestbook application`
+* Use for `description`: `That module will add a new Argo CD config to deploy the helloworld-with-ubi-helm application`
 
 ```yaml
 name: "helloworld-with-ubi-helm"
@@ -376,7 +376,7 @@ versions:
 
 ### 4.5 Configure the `helm chart` copy automation in the `scripts/create-yaml.sh` file
 
-#### Step 1: Configure the `scripts/create-yaml.sh` in `gitops-terraform-guestbook` repository 
+#### Step 1: Configure the `scripts/create-yaml.sh` in `helloworld-with-ubi-helm` repository 
 
 Replace the existing code in `scripts/create-yaml.sh` with following content. This is important for later when the `helm-chart` will be copied.
 
@@ -402,13 +402,13 @@ echo "Files in output path"
 ls -l "${DEST_DIR}"
 ```
 
-### 4.6 [`gitops-terraform-guestbook`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/tags) GitHub repository `tags` and `releases` 
+### 4.6 [`helloworld-with-ubi-helm`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/tags) GitHub repository `tags` and `releases` 
 
-The release tag represents the version number of our module. [`gitops-terraform-guestbook`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook)
+The release tag represents the version number of our module. [`helloworld-with-ubi-helm`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm)
 
-#### Step 1: Create GitHub tag and release for the `gitops-terraform-guestbook` GitHub repository
+#### Step 1: Create GitHub tag and release for the `helloworld-with-ubi-helm` GitHub repository
 
-The module github repository `release tags` should be updated when you are going to change the [`gitops-terraform-guestbook`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook) GitHub repository module. 
+The module github repository `release tags` should be updated when you are going to change the [`helloworld-with-ubi-helm`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm) GitHub repository module. 
 
 The image below shows some releases and as you can see for each release an archive is available. Later [`iascable`](https://github.com/cloud-native-toolkit/iascable) uses the `release tag` to download the right archive to the local computer to create the Terraform output.
 
@@ -421,21 +421,21 @@ In case when you use specific version numbers in the `BOM` which consums the mod
 Example relevant extract from a `BOM` -> `version: v0.0.5`
 
 ```yaml
-    # Install guestbook
+    # Install helloworld-with-ubi-helm
     # New custom module linked be the custom catalog
-    - name: gitops-terraform-guestbook
-      # alias: gitops-terraform-guestbook
+    - name: helloworld-with-ubi-helm
+      # alias: helloworld-with-ubi-helm
       #  version: v0.0.5
       # variables:
       #  - name: namespace_name
-      #    value: "helm-guestbook"
+      #    value: "helm-helloworld-with-ubi-helm"
 ```
 
 You can follow the step to create a GitHub tag is that [example blog post](https://suedbroecker.net/2022/05/09/how-to-create-a-github-tag-for-your-last-commit/) and then create a release.
 
 ## 5. Create an own catalog
 
-In that example we will not publish the our `gitops-terraform-guestbook` module to the public catalog on [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/). 
+In that example we will not publish the our `helloworld-with-ubi-helm` module to the public catalog on [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/). 
 
 We will create our own `catalog.yaml` file and save the configuration in the GitHub project of the module.
 
@@ -522,7 +522,7 @@ The following diagram shows the simplfied dependencies of `module`, `catalog` an
 
 ### 5.5 Create a custom catalog
 
-#### Step 1: Create a `guestbook-catalog.yml` and insert following content
+#### Step 1: Create a `helloworld-with-ubi-helm-catalog.yml` and insert following content
 
 > Note: Ensure that the github project has a tag and a release!
 
@@ -539,10 +539,10 @@ The following diagram shows the simplfied dependencies of `module`, `catalog` an
         - cloudProvider: ""
           softwareProvider: ""
           type: gitops
-          id: github.com/thomassuedbroecker/gitops-terraform-guestbook
+          id: github.com/thomassuedbroecker/helloworld-with-ubi-helm
           group: ""
-          displayName: gitops-terraform-guestbook
-          name: gitops-terraform-guestbook
+          displayName: helloworld-with-ubi-helm
+          name: helloworld-with-ubi-helm
           description: asdf
           tags:
             - tools
@@ -605,7 +605,7 @@ The following diagram shows the simplfied dependencies of `module`, `catalog` an
                   description: The type of module where the module is deployed
   ```
 
-### 5.6. `BOM` that we will use `guestbook module`
+### 5.6. `BOM` that we will use `helloworld-with-ubi-helm module`
 
 #### Step 1: Clone the project with the example [`BOM`](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/ibm-vpc-roks-argocd-guestbook.yaml) configuration 
 
@@ -617,7 +617,7 @@ git clone https://github.com/thomassuedbroecker/gitops-create-software-everywher
 
 This is the simplified target architecture what our  `BOM` will create as terraform code for initial setup.
 
-A customized IBM Cloud environment for `GitOps` and our `guestbook` module.
+A customized IBM Cloud environment for `GitOps` and our `helloworld-with-ubi-helm` module.
 
 * For the configuration of GitOps in Red Hat OpenShift. We will use two operators:
 
@@ -642,7 +642,7 @@ This is the structure of the `BOM` we are going to use:
 * Virtual Private Cloud - related
 * ROKS - related (RedHat OpenShift on IBM Cloud)
 * GitOps and Bootstrap of GitOps 
-* Our own module called `gitops-terraform-guestbook`
+* Our own module called `helloworld-with-ubi-helm`
 
 > Note: You need configure variables to your needs, when you share your IBM Cloud environment with others. 
 
@@ -725,8 +725,8 @@ spec:
           value: "iascable-gitops-guestbook"
     # Install guestbook
     # New custom module linked be the custom catalog
-    - name: gitops-terraform-guestbook
-      #  alias: gitops-terraform-guestbook
+    - name: helloworld-with-ubi-helm
+      #  alias: helloworld-with-ubi-helm
       #  version: v0.0.5
       variables:
         - name: namespace
@@ -757,7 +757,7 @@ These are the helper scripts:
 
 ```sh
 BASE_CATALOG=https://modules.cloudnativetoolkit.dev/index.yaml
-CUSTOM_CATALOG=https://raw.githubusercontent.com/thomassuedbroecker/gitops-terraform-guestbook/main/guestbook-catalog.yml
+CUSTOM_CATALOG=https://raw.githubusercontent.com/thomassuedbroecker/helloworld-with-ubi-helm/main/guestbook-catalog.yml
 
 # 1. Create scaffolding
 iascable build -i ibm-vpc-roks-argocd-guestbook.yaml -c $BASE_CATALOG -c $CUSTOM_CATALOG
@@ -1071,7 +1071,7 @@ AH00015: Unable to open logs
 
 That folder contains the **Guestbook application** `helm chart configuration` to deploy the guestbook application.
 
-The script `scripts/create-yaml.sh` of our [module `gitops-terraform-guestbook`](https://github.com/thomassuedbroecker/gitops-terraform-guestbook/blob/main/scripts/create-yaml.sh) was resposible to copy the guestbook helm-chart into the payload directory. Therefor we did the customization of that file.
+The script `scripts/create-yaml.sh` of our [module `helloworld-with-ubi-helm`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/scripts/create-yaml.sh) was resposible to copy the guestbook helm-chart into the payload directory. Therefor we did the customization of that file.
 
 We defined the values content for the helm chart variables before in the `module.tf` file. That file `values.yaml` file is used in `Argo CD application` configuration for the parameters.
 
