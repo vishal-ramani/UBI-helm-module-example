@@ -283,32 +283,32 @@ helm template test . -n test
 Example output:
 
 ```sh
-# Source: ubi-helm/templates/deployment.yaml
+# Source: terraform-gitops-ubi/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ubi-helm-ubi-helm
+  name: test-terraform-gitops-ubi
   labels:
-    app: ubi-helm
-    chart: ubi-helm-ubi-helm
-    release: ubi-helm
+    app: terraform-gitops-ubi
+    chart: test-terraform-gitops-ubi
+    release: test
     heritage: Helm
 spec:
   replicas: 2
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: ubi-helm
-      release: ubi-helm
+      app: terraform-gitops-ubi
+      release: test
   template:
     metadata:
       labels:
-        app: ubi-helm
-        release: ubi-helm
+        app: terraform-gitops-ubi
+        release: test
     spec:
       containers:
-        - name: ubi-helm
-          image: "ubi8/ubi:latest"
+        - name: terraform-gitops-ubi
+          image: "registry.access.redhat.com/ubi8/ubi:latest"
           imagePullPolicy: Always
           args:
             - /bin/sh
@@ -321,6 +321,10 @@ spec:
               - /tmp/healthy
             initialDelaySeconds: 5
             periodSeconds: 5
+```
+
+```sh
+helm package .
 ```
 
 ### 4.4 The [`module.yaml`](https://github.com/thomassuedbroecker/helloworld-with-ubi-helm/blob/main/module.yaml) file
