@@ -6,8 +6,8 @@ The objective is to understand how to build new modules for the [`Technology Zon
 
 ## 2. What does the project do?
 
-This project does inspect the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops) and needs to be seen in combination with the [gitops-verify-swagger-editor-example](https://github.com/thomassuedbroecker/gitops-verify-swagger-editor-example) outcome.
-The repository documents how to create a module for [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/) `step-by-step` using the [helm terraform-gitops-ubi application example](https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook) from the Argo CD GitHub repository.
+This project does inspect the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops).
+The repository documents how to create a module for [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/) `step-by-step` using the [ubi-helm example](https://github.com/thomassuedbroecker/ubi-helm) from the Argo CD GitHub repository.
 
 ### 2.1 Understand the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops)
 
@@ -80,16 +80,26 @@ iascable --version
 2.17.2
 ```
 
-### 3.1.2 Install a container engine
+### 3.1.2 Install a [Multipass](https://multipass.run/) 
 
-In this example we use the unsupport container engine [colima](https://github.com/abiosoft/colima), because that worked for us.
+We will follow the instructions for [Multipass](https://github.com/cloud-native-toolkit/automation-solutions/blob/main/common-files/RUNTIMES.md#multipass). The following steps are an extractions of the [cloud-native-toolkit documentation](https://github.com/cloud-native-toolkit/automation-solutions/blob/main/common-files/RUNTIMES.md#multipas) with small changes when needed.
 
-#### Step 1: Install [colima](https://github.com/abiosoft/colima)
+#### Step 1: Install [Multipass](https://multipass.run/) with brew 
+```
+brew install --cask multipass
+```
 
-```sh
-# Homebrew
-brew install colima
-``` 
+### Step 2: Download [cloud-init](https://github.com/cloud-native-toolkit/sre-utilities/blob/main/cloud-init/cli-tools.yaml) configuration
+
+```
+curl https://raw.githubusercontent.com/cloud-native-toolkit/sre-utilities/main/cloud-init/cli-tools.yaml --output cli-tools.yaml
+```
+
+### Step 3: Start the virtual `cli-tools` machine
+
+```
+multipass launch --name cli-tools --cloud-init ./cli-tools.yaml
+```
 
 ## 4. Implement the new `terraform-gitops-ubi` module 
 
