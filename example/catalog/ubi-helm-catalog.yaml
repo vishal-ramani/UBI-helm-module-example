@@ -120,17 +120,6 @@ categories:
                 moduleRef:
                   id: gitops
                   output: server_name
-              - name: enable_sso
-                type: bool
-                description: Flag indicating if oauth should be applied (only available for OpenShift)
-                default: true
-              - name: tls_secret_name
-                description: The name of the secret containing the tls certificate values
-                default: '""'
-              - name: cluster_ingress_hostname
-                type: string
-                description: Ingress hostname of the cluster.
-                default: ""
               - name: cluster_type
                 description: The cluster type (openshift or kubernetes)
                 default: '"openshift"'
