@@ -75,5 +75,5 @@ spec:
     # Install ubi
     # New custom module linked be the custom catalog
     - name: terraform-gitops-ubi
-      #  alias: terraform-gitops-ubi
-      #  version: v0.0.5
+      alias: terraform-gitops-ubi
+      version: v0.0.2
