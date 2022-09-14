@@ -116,9 +116,9 @@ In that section we will modify files in our newly created repository. These are 
 
 #### Step 1:  Do some modifications in the `main.tf` file
 
-* Change `name = "my-helm-chart-folder"` to `helm-guestbook`
+* Change `name = "my-helm-chart-folder"` to `ubi-helm`
 
-* First add `helm_guestbook = {// create entry}` to the `values_content = {}`. That entry will be used to create the values for the variables in the `values.yaml` file for the helm chart.
+* First add `ubi-helm = {// create entry}` to the `values_content = {}`. That entry will be used to create the values for the variables in the `values.yaml` file for the helm chart.
   
   Below you see the relevant code in the `main.tf` which does the copy later. As you can is it uses the `{local.name}` value, so you need to ensure the name reflects the folder structure for your `helm-chart` later.
 
@@ -134,27 +134,14 @@ In that section we will modify files in our newly created repository. These are 
   }
   ```
 
-  These are the values we need to insert for our terraform-gitops-ubi application as variables for the helm-chart. You find the variables in the Argo CD github project for the helm terraform-gitops-ubi application [values.yaml](https://github.com/argoproj/argocd-example-apps/blob/master/helm-guestbook/values.yaml)
+  These are the values we need to insert for our terraform-gitops-ubi application as variables for the helm-chart. You find the variables in the Argo CD github project for the ubi-helm [values.yaml](https://github.com/thomassuedbroecker/ubi-helm/blob/main/charts/ubi-helm/values.yaml)
 
   Now replace the `// create entry` with the needed values.
 
 ```sh
-    helm_ubihelm = {
+    ubi-helm = {
       "replicaCount": 1
-      "image.repository" = "ubi8/ubi"
-      "image.tag" = "latest"
-      "image.pullPolicy" = "IfNotPresent"
-      "service.type" = "ClusterIP"
-      "service.port" = "8080"
-      "ingress.enabled" = "false"
-      "ingress.annotations" = ""
-      "ingress.path" = "/"
-      "ingress.hosts" = ["chart-example.local"]
-      "ingress.tls" = []
-      "resources" = ""
-      "nodeSelector" = ""
-      "tolerations" = ""
-      "affinity" = ""
+      "image.repository" = "registry.access.redhat.com/ubi8/ubi"
     }
 ```
   
@@ -192,7 +179,7 @@ variable "cluster_type" {
 }
 ```
 
-### 4.3 The [`helm chart`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/tree/main/chart/helm-guestbook) content
+### 4.3 The [`helm chart`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/tree/main/chart/ubi-helm) content
 
 #### Step 1: Create a new folder structure for the `terraform-gitops-ubi helm chart`
 
@@ -209,7 +196,7 @@ variable "cluster_type" {
     │       │       ├── templates
     │       │       │   ├── _helpers.tpl
     │       │       │   └── deployment.yaml
-    │       │       ├── ubi-helm-v1.0.0.tgz
+    │       │       ├── ubi-helm-v0.0.01.tgz
     │       │       └── values.yaml
     │       └── values.yaml
 ```
@@ -228,7 +215,7 @@ That will be the resulting folder structure for the `terraform-gitops-ubi module
 │       │       ├── templates
 │       │       │   ├── _helpers.tpl
 │       │       │   └── deployment.yaml
-│       │       ├── ubi-helm-v1.0.0.tgz
+│       │       ├── ubi-helm-v0.0.1.tgz
 │       │       └── values.yaml
 │       └── values.yaml
 ├── cli-tools.yaml
@@ -254,7 +241,7 @@ That will be the resulting folder structure for the `terraform-gitops-ubi module
 ```
 
 
-#### Step 2: Copy in newly create folderstructure the content from the repository for the `helm-guestbook` chart [https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook](https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook)
+#### Step 2: Copy in newly create folderstructure the content from the repository for the `ubi-helm` chart [https://github.com/thomassuedbroecker/ubi-helm/tree/main/charts/ubi-helm](https://github.com/thomassuedbroecker/ubi-helm/tree/main/charts/ubi-helm)
 
 #### Step 3: Validate the `helm chart` with following commands:
 
@@ -621,10 +608,10 @@ The following diagram shows the simplfied dependencies of `module`, `catalog` an
 
 ### 5.6. `BOM` that we will use `terraform-gitops-ubi module`
 
-#### Step 1: Clone the project with the example [`BOM`](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/ibm-vpc-roks-argocd-guestbook.yaml) configuration 
+#### Step 1: Clone the project with the example [`BOM`](https://github.com/Vishal-Ramani/UBI-helm-module-example.git/blob/main/example/ibm-vpc-roks-argocd-ubi.yaml) configuration 
 
 ```sh
-git clone https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module
+git clone https://github.com/Vishal-Ramani/UBI-helm-module-example.git
 ```
 
 #### Step 2: Verify the [`ibm-vpc-roks-argocd-guestbook.yaml`](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/ibm-vpc-roks-argocd-guestbook.yaml) `BOM` file
@@ -666,7 +653,7 @@ We commented out the `#  version: v0.0.5` of our module, because we will configu
 apiVersion: cloudnativetoolkit.dev/v1alpha1
 kind: BillOfMaterial
 metadata:
-  name: ibm-vpc-roks-argocd-guestbook
+  name: ibm-vpc-roks-argocd-ubi
 spec:
   modules:
     # Virtual Private Cloud - related
@@ -742,9 +729,6 @@ spec:
     - name: terraform-gitops-ubi
       #  alias: terraform-gitops-ubi
       #  version: v0.0.5
-      variables:
-        - name: namespace
-          value: "helm-ubi"
 ```
 
 ## 6. Create terraform code and create the resources
