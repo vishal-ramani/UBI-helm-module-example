@@ -612,6 +612,7 @@ The following diagram shows the simplfied dependencies of `module`, `catalog` an
 
 ```sh
 git clone https://github.com/Vishal-Ramani/UBI-helm-module-example.git
+cd example
 ```
 
 #### Step 2: Verify the [`ibm-vpc-roks-argocd-guestbook.yaml`](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/ibm-vpc-roks-argocd-guestbook.yaml) `BOM` file
@@ -740,6 +741,14 @@ Use [`iascable`](https://github.com/cloud-native-toolkit/iascable) to create the
 
 ```sh
 cp ./credentials.properties-template ./credentials.properties
+nano credentials.properties
+```
+
+Provide the your GitHub access token and IBM Cloud API key.
+
+```sh
+export TF_VAR_gitops_repo_token=XXX
+export TF_VAR_ibmcloud_api_key=XXX
 ```
 
 ### Step 2: Execute following commands
@@ -751,7 +760,52 @@ CUSTOM_CATALOG=https://raw.githubusercontent.com/Vishal-Ramani/UBI-helm-module-e
 iascable build -i ibm-vpc-roks-argocd-ubi.yaml -c $BASE_CATALOG -c $CUSTOM_CATALOG
 ```
 
-### Step 3: Navigate to the `output` folder
+### Step 3: Verify the created files and folders
+
+```sh
+tree .
+```
+
+* Example output:
+
+```sh
+.
+├── catalog
+│   └── ubi-helm-catalog.yaml
+├── credentials.properties
+├── credentials.properties-template
+├── ibm-vpc-roks-argocd-ubi.yaml
+└── output
+    ├── ibm-vpc-roks-argocd-ubi
+    │   ├── apply.sh
+    │   ├── bom.yaml
+    │   ├── dependencies.dot
+    │   ├── destroy.sh
+    │   └── terraform
+    │       ├── docs
+    │       │   ├── argocd-bootstrap.md
+    │       │   ├── gitops-namespace.md
+    │       │   ├── gitops-repo.md
+    │       │   ├── ibm-object-storage.md
+    │       │   ├── ibm-ocp-vpc.md
+    │       │   ├── ibm-resource-group.md
+    │       │   ├── ibm-vpc-gateways.md
+    │       │   ├── ibm-vpc-subnets.md
+    │       │   ├── ibm-vpc.md
+    │       │   ├── olm.md
+    │       │   ├── sealed-secret-cert.md
+    │       │   └── terraform-gitops-ubi.md
+    │       ├── ibm-vpc-roks-argocd-ubi.auto.tfvars
+    │       ├── main.tf
+    │       ├── providers.tf
+    │       ├── variables.tf
+    │       └── version.tf
+    └── launch.sh
+
+5 directories, 26 files
+```
+
+### Step 4: Navigate to the `output` folder
 
 ```sh
 cd output
