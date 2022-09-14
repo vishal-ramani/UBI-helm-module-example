@@ -218,7 +218,6 @@ That will be the resulting folder structure for the `terraform-gitops-ubi module
 │       │       ├── ubi-helm-v0.0.1.tgz
 │       │       └── values.yaml
 │       └── values.yaml
-├── cli-tools.yaml
 ├── main.tf
 ├── module.yaml
 ├── outputs.tf
@@ -417,8 +416,6 @@ The image below shows some releases and as you can see for each release an archi
 
 In case when you use specific version numbers in the `BOM` which consums the module, you need to ensure that version number is also in range of the custom chart which points to the module. That is also relevant for the `catalog.yaml` we will define later.
 
-
-
 Example relevant extract from a `BOM` -> `version: v0.0.5`
 
 ```yaml
@@ -544,7 +541,7 @@ The following diagram shows the simplfied dependencies of `module`, `catalog` an
           group: ""
           displayName: terraform-gitops-ubi
           name: terraform-gitops-ubi
-          description: asdf
+          description: "That module will add a new 'Argo CD config' to deploy a 'ubi' container to OpenShift"
           tags:
             - tools
             - gitops
@@ -811,14 +808,14 @@ tree .
 cd output
 ```
 
-### Step 3: Copy the `credentials.properties` into the `output` folder
+### Step 5: Copy the `credentials.properties` into the `output` folder
 
 ```sh
 CURRENT_PATH=$(pwd)
 cp $CURRENT_PATH/../credentials.properties $CURRENT_PATH/credentials.properties
 ```
 
-##### Step 6: Map the current folder to the Multpass cli-tools VM
+### Step 6: Map the current folder to the Multpass cli-tools VM
 
 Ensure you started the `Multipass cli-tools VM` before you execute the following command:
 
@@ -826,14 +823,12 @@ Ensure you started the `Multipass cli-tools VM` before you execute the following
 multipass mount $PWD cli-tools:/automation
 ```
 
-#### 3.1.2 Terminal inside the `cli-tools VM`
-
 Now we have mapped the `output` folder to the `cli-tools VM`. We can use the installed [`CLI tools`](https://github.com/cloud-native-toolkit/image-cli-tools) inside the `cli-tools VM` to apply the Terraform code. 
 
 > All changes we made in with `cli-tools VM` will be saved in the mapped `output` folder on our local machine.
 
 
-##### Step 1: Open the interactive shell
+### Step 7: Open the interactive shell
 
 ```sh
 multipass shell cli-tools
@@ -846,7 +841,7 @@ Last login: Mon Sep 12 18:06:24 2022 from 192.168.64.1
 ubuntu@cli-tools:~$ 
 ```
 
-##### Step 2: In the virtual machine navigate to the automation folder
+### Step 8: In the virtual machine navigate to the automation folder
 
 ```sh
 cd ../../automation
@@ -857,13 +852,13 @@ ls
 
 ```sh
 source credentials.properties
-echo $TF_VAR_login_user
+echo $TF_VAR_ibmcloud_api_key
 ```
 
-##### Step 4: Now navigate to the `example` folder
+##### Step 4: Now navigate to the `ibm-vpc-roks-argocd-ubi` folder
 
 ```sh
-cd example/
+cd ibm-vpc-roks-argocd-ubi/
 ls
 ```
 
@@ -883,55 +878,11 @@ Do you want to perform these actions?
   Enter a value:
 ```
 
+* Interactive output:
 
-
-#### Step 4: Start the `launch.sh script`
-
-```sh
-cd output
-sh launch.sh
-```
-
-#### Step 5: Execute in the `tools container` the ["helper-tools-create-container-workspace.sh"](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-tools-create-container-workspace.sh) script
-
-```sh
-/terraform $
-```
-
-```sh
-sh helper-tools-create-container-workspace.sh 
-```
-
-That script ["helper-tools-create-container-workspace.sh"](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-tools-create-container-workspace.sh) does following steps inside the tools container:
-
-1. Basic global variables
-2. Create a workspace folder
-3. Copy content of the mapped volume to the newly created the workspace folder
-4. Navigate to the workspace folder
-
-#### Step 6: Execute in the `tools container` the ["helper-tools-execute-apply-and-backup-result.sh"](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-tools-execute-apply-and-backup-result.sh) script
-
-```sh
-/terraform $
-```
-
-```sh
-sh helper-tools-execute-apply-and-backup-result.sh 
-```
-
-That script ["helper-tools-execute-apply-and-backup-result.sh"](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-tools-execute-apply-and-backup-result.sh) does following steps inside the tools container:
-
-1. Basic global variables
-2. Navigate to workspace
-3. Execute apply.sh
-4. List the created resources
-5. Copy current of the workspace folder to mapped volume
-
-Interactive output:
-
-* Namespace: guestbook
-* Region: eu-de
-* Resource group: default
+  * Namespace: ubi-helm
+  * Region: eu-de
+  * Resource group: default
 
 ```sh
 Provide a value for 'gitops-repo_host':
@@ -942,7 +893,7 @@ Provide a value for 'gitops-repo_org':
 > (thomassuedbroecker) 
 Provide a value for 'gitops-repo_project':
   The project that will be used for the git repo. (Primarily used for Azure DevOps repos)
-> (iascable-gitops-guestbook) 
+> (iascable-gitops-ubi) 
 Provide a value for 'gitops-repo_username':
   The username of the user with access to the repository
 > (thomassuedbroecker) 
