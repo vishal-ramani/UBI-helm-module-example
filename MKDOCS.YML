@@ -1,23 +1,22 @@
 # Project information
-site_name: Your Project
-site_url: https://[YOUR_GITHUB_ID].github.io/[your-repository-name]
-site_author: Thomas Südbröcker
+site_name:  UBI helm module example
+site_url: https://github.com/Vishal-Ramani/UBI-helm-module-examplee
+site_author: Vishal Ramani, Thomas Suedbroecker, Diwakar Prasad Tiwari
 
 # Repository
-repo_name: [YOUR-REPOSITORY-NAME]
-repo_url: https://github.com/[YOUR_GITHUB_ID]/[YOUR-REPOSITORY-NAME]
-edit_uri: edit/master/[YOU-DOCUMENTATION_FOLDER]
-docs_dir: [YOU-DOCUMENTATION_FOLDER]
+repo_name: UBI helm module example
+repo_url: https://github.com/Vishal-Ramani/UBI-helm-module-example
+edit_uri: edit/main/documentation
+docs_dir: documentation
 
 # Navigation
 nav:
-  - Welcome:
-    - Overview: README.md   
+  - 1. Overview: ./README.md
 
 ## DO NOT CHANGE BELOW THIS LINE
 
 # Copyright
-# TBD
+#copyright: Copyright &copy; 2022 IBM Developer
 
 # Theme
 theme:
@@ -26,22 +25,34 @@ theme:
     text: IBM Plex Sans
     code: IBM Plex Mono
   icon:
+    # .svg automatically appended
+    # logo: ibm_8bar_reverse_2
     logo: material/library
   features:
     # - navigation.tabs
     - navigation.instant
-    - navigation.expand
+    # - navigation.expand
   palette:
     scheme: default
-    primary: blue
+    primary: black
     accent: blue
-
-# Plugins
-plugins:
-  - search
+  # palette:
+  #  scheme: default
+  #  primary: blue
+  #  accent: blue
+  # enable if you want to use a custom icon
+  # custom_dir: overrides
 
 # Customization
-# TBD
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module
+  generator: false
+
+extra_css:
+  - docs/stylesheets/extra.css
+  - stylesheets/extra.css
 
 # Extensions
 markdown_extensions:
