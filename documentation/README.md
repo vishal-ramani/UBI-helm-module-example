@@ -733,59 +733,25 @@ spec:
 
 ## 6. Create terraform code and create the resources
 
-Use [`iascable`](https://github.com/cloud-native-toolkit/iascable) to create the terraform code
+Use [`iascable`](https://github.com/cloud-native-toolkit/iascable) to create the terraform code.
 
-#### Step 1: Update helper scripts
 
-The helper scripts are not a part of the framework, the will just help to avoid failures during the execution of several command.
+### Step 1: Create a `credentials.properties` file and edit the file
 
 ```sh
-cd example
-ls
+cp ./credentials.properties-template ./credentials.properties
 ```
 
-These are the helper scripts:
-
-  * [helper-create-scaffolding.sh](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-create-scaffolding.sh)                          
-  * [helper-tools-create-container-workspace.sh](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-tools-create-container-workspace.sh)          
-  * [helper-tools-execute-apply-and-backup-result.sh](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-tools-execute-apply-and-backup-result.sh)       
-  * [helper-tools-execute-destroy-and-delete-backup.sh](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-tools-execute-destroy-and-delete-backup.sh)
-
-* Update helper script `helper-create-scaffolding.sh` with following code that uses two catalog files as input for the terraform creation with `iascable`.
+### Step 2: Execute following commands
 
 ```sh
 BASE_CATALOG=https://modules.cloudnativetoolkit.dev/index.yaml
-CUSTOM_CATALOG=https://raw.githubusercontent.com/Vishal-Ramani/terraform-gitops-ubi/main/guestbook-catalog.yml
+CUSTOM_CATALOG=https://raw.githubusercontent.com/Vishal-Ramani/UBI-helm-module-example/main/example/catalog/ubi-helm-catalog.yaml
 
-# 1. Create scaffolding
-iascable build -i ibm-vpc-roks-argocd-guestbook.yaml -c $BASE_CATALOG -c $CUSTOM_CATALOG
+iascable build -i ibm-vpc-roks-argocd-ubi.yaml -c $BASE_CATALOG -c $CUSTOM_CATALOG
 ```
 
-#### Step 2: Execute ["helper-create-scaffolding.sh"](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-create-scaffolding.sh)
 
-```sh
-sh helper-create-scaffolding.sh 
-```
-
-That script ["helper-create-scaffolding.sh"](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/helper-create-scaffolding.sh) does following steps:
-
-1. Basic global variables
-2. Create scaffolding (execute iascable)
-3. Copy helper bash scripts
-4. Navigate to the output folder
-5. Start the container engine
-
-#### Step 3: Delete the `-u "${UID}" \` command from the `output/launch.sh` script
-
-```sh
-${DOCKER_CMD} run -itd --name ${CONTAINER_NAME} \
-  --device /dev/net/tun --cap-add=NET_ADMIN \
-  -u "${UID}" \
-  -v "${SRC_DIR}:/terraform" \
-  -v "workspace-${AUTOMATION_BASE}:/workspaces" \
-  ${ENV_VARS} -w /terraform \
-  ${DOCKER_IMAGE}
-```
 
 #### Step 4: Start the `launch.sh script`
 
