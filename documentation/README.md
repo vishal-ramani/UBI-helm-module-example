@@ -812,7 +812,8 @@ cd output
 
 ```sh
 CURRENT_PATH=$(pwd)
-cp $CURRENT_PATH/../credentials.properties $CURRENT_PATH/credentials.properties
+PROJECT=ibm-vpc-roks-argocd-ubi
+cp $CURRENT_PATH/../credentials.properties $CURRENT_PATH/ibm-vpc-roks-argocd-ubi/credentials.properties
 ```
 
 ### Step 6: Map the current folder to the Multpass cli-tools VM
@@ -848,27 +849,27 @@ cd ../../automation
 ls
 ```
 
-##### Step 3: Source the `credentials.properties` as environment variables and show one variable
-
-```sh
-source credentials.properties
-echo $TF_VAR_ibmcloud_api_key
-```
-
-##### Step 4: Now navigate to the `ibm-vpc-roks-argocd-ubi` folder
+### Step 9: Now navigate to the `ibm-vpc-roks-argocd-ubi` folder
 
 ```sh
 cd ibm-vpc-roks-argocd-ubi/
 ls
 ```
 
-##### Step 5: Execute apply.sh
+### Step 10: Source the `credentials.properties` as environment variables and show one variable
 
 ```sh
-sh apply.sh
+source credentials.properties
+echo $TF_VAR_ibmcloud_api_key
 ```
 
-##### Step 6: Enter `yes` to apply the Terraform code
+### Step 11: Execute `./apply.sh`
+
+```sh
+./apply.sh
+```
+
+### Step 12: Enter `yes` to apply the Terraform code
 
 ```sh
 Do you want to perform these actions?
@@ -880,11 +881,15 @@ Do you want to perform these actions?
 
 * Interactive output:
 
-  * Namespace: ubi-helm
-  * Region: eu-de
-  * Resource group: default
+  * Namespace: `ubi-helm`
+  * Region: `eu-de`
+  * Resource group: `default`
+  * Common tag: `["tsuedro"]`
+  * gitops-repo_token: `XXX`
 
 ```sh
+Variables can be provided in a yaml file passed as the first argument
+
 Provide a value for 'gitops-repo_host':
   The host for the git repository. The git host used can be a GitHub, GitHub Enterprise, Gitlab, Bitbucket, Gitea or Azure DevOps server. If the host is null assumes in-cluster Gitea instance will be used.
 > (github.com) 
@@ -898,10 +903,9 @@ Provide a value for 'gitops-repo_username':
   The username of the user with access to the repository
 > (thomassuedbroecker) 
 Provide a value for 'gitops-repo_token':
-> XXX
-> Provide a value for 'ibmcloud_api_key':
-> XXX
-Provide a value for 'region':
+  The personal access token used to access the repository
+> XXXX
+> Provide a value for 'region':
 > eu-de
 Provide a value for 'worker_count':
   The number of worker nodes that should be provisioned for classic infrastructure
@@ -909,15 +913,18 @@ Provide a value for 'worker_count':
 Provide a value for 'ibm-ocp-vpc_flavor':
   The machine type that will be provisioned for classic infrastructure
 > (bx2.4x16) 
+Provide a value for 'common_tags':
+  Common tags that should be added to the instance
+> ([]) ["tsuedro"]
 Provide a value for 'ibm-vpc-subnets__count':
   The number of subnets that should be provisioned
 > (1) 
-Provide a value for 'namespace_name':
-  The value that should be used for the namespace
-> guestbook
 Provide a value for 'resource_group_name':
   The name of the resource group
 > default
+Provide a value for 'namespace_name':
+  The value that should be used for the namespace
+> ubi-helm
 ```
 
 #### Step 7: Verify the output of terraform execution
