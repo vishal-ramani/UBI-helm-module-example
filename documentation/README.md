@@ -107,7 +107,7 @@ In that section we will modify files in our newly created repository. These are 
 
 * The [`main.tf`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/blob/main/main.tf) file
 * The [`variable.tf`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/blob/main/variables.tf) file
-* The [`helm chart`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/tree/main/chart/helm-guestbook) content
+* The [`helm chart`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/tree/main/chart/helm-ubi) content
 * The [`module.yaml`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/blob/main/module.yaml) file
 * Configure the `helm chart` copy automation in the `scripts/create-yaml.sh` file
 * Create for [`terraform-gitops-ubi` GitHub repository `tags` and `releases`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/tags)
@@ -676,7 +676,7 @@ git clone https://github.com/Vishal-Ramani/UBI-helm-module-example.git
 cd example
 ```
 
-#### Step 2: Verify the [`ibm-vpc-roks-argocd-guestbook.yaml`](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/ibm-vpc-roks-argocd-guestbook.yaml) `BOM` file
+#### Step 2: Verify the [`ibm-vpc-roks-argocd-ubi.yaml`](https://github.com/thomassuedbroecker/gitops-create-software-everywhere-module/blob/main/example/ibm-vpc-roks-argocd-ubi.yaml) `BOM` file
 
 This is the simplified target architecture what our  `BOM` will create as terraform code for initial setup.
 
@@ -1008,9 +1008,9 @@ We see that in our GitHub account new repostory was created from the [GitOps boo
 
 ![](https://github.com/cloud-native-toolkit/terraform-tools-gitops/blob/main/template/docs/gitops-structure-overview.png?raw=true)
 
-The new GitHub repository is called `iascable-gitops-guestbook` in our case.
+The new GitHub repository is called `iascable-gitops-ubi` in our case.
 
-The new `iascable-gitops-guestbook` repository contains two folders the following image shows the relation to the bootstrap configuration.
+The new `iascable-gitops-ubi` repository contains two folders the following image shows the relation to the bootstrap configuration.
 
 ![](images/develop-own-module-09.png)
 
@@ -1018,9 +1018,9 @@ The new `iascable-gitops-guestbook` repository contains two folders the followin
 
 ![](images/develop-own-module-03.png)
 
-* **payload** folder which contains the current helm deployment for the **apps** which will be deployed. The following image show the deployment created by `apps` in our case the helm-guestbook 
+* **payload** folder which contains the current helm deployment for the **apps** which will be deployed. The following image show the deployment created by `apps` in our case the helm-ubi 
 
-The following image shows the newly created GitHub `iascable-gitops-guestbook` repository.
+The following image shows the newly created GitHub `iascable-gitops-ubi` repository.
 
 ![](images/develop-own-module-02.png)
 
@@ -1028,11 +1028,11 @@ For more details visit the template of the [terraform-tools-gitops](https://gith
 
 
 
-### 7.1 Understand how the `guestbook module content` was pasted into the new `iascable-gitops-guestbook` repository
+### 7.1 Understand how the `ubi module content` was pasted into the new `iascable-gitops-ubi` repository
 
 Following the concept for the gitops bootstrap setup documented in the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops) GitHub repository.
 
-We have two main folders in the `iascable-gitops-guestbook` repository.
+We have two main folders in the `iascable-gitops-ubi` repository.
 
 1. One for the `Argo CD application` configurations called `argocd`
 2. One for the application which will be deployed be the `Argo CD application` configurations called payload.
@@ -1043,23 +1043,23 @@ Let us inspect these two folders. The `gif` below shows some of the created file
 
 #### 7.1.1 `argocd` folder
 
-There were two `Argo CD application` configurations added into the `iascable-gitops-guestbook` repository. 
+There were two `Argo CD application` configurations added into the `iascable-gitops-ubi` repository. 
 
-1. One for the `namespace` in the OpenShift or Kubernetes cluster where the guestbook application will be deployed. That `Argo CD application` configuration is related to exiting  `1-infrastructure` Argo CD project created by the [GitOps bootstap module](https://github.com/cloud-native-toolkit/terraform-util-gitops-bootstrap).
+1. One for the `namespace` in the OpenShift or Kubernetes cluster where the ubi application will be deployed. That `Argo CD application` configuration is related to exiting  `1-infrastructure` Argo CD project created by the [GitOps bootstap module](https://github.com/cloud-native-toolkit/terraform-util-gitops-bootstrap).
 
-2. One for the `guestbook` application we want to deploy. That `Argo CD application` configuration is related to exiting  `3-application` Argo CD project created by the [GitOps bootstap module](https://github.com/cloud-native-toolkit/terraform-util-gitops-bootstrap).
+2. One for the `ubi` application we want to deploy. That `Argo CD application` configuration is related to exiting  `3-application` Argo CD project created by the [GitOps bootstap module](https://github.com/cloud-native-toolkit/terraform-util-gitops-bootstrap).
 
 Let's take a look a the created `Argo CD application configurations`
 
 We have two `Argo CD` application configurations:
 
-#### 7.1.1.1 Guestbook **Namespace** in `argocd.1-infrastructure.cluster.default.base.namespace.yaml`
+#### 7.1.1.1 ubi **Namespace** in `argocd.1-infrastructure.cluster.default.base.namespace.yaml`
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: namespace-guestbook
+  name: namespace-ubi
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -1068,8 +1068,8 @@ spec:
     server: https://kubernetes.default.svc
   project: 1-infrastructure
   source:
-    path: payload/1-infrastructure/namespace/guestbook/namespace
-    repoURL: https://github.com/thomassuedbroecker/iascable-gitops-guestbook.git
+    path: payload/1-infrastructure/namespace/ubi/namespace
+    repoURL: https://github.com/thomassuedbroecker/iascable-gitops-ubi.git
     targetRevision: main
   syncPolicy:
     automated:
@@ -1078,9 +1078,9 @@ spec:
   ignoreDifferences: []
 ```
 
-#### 7.1.1.2 UBI **application deployment** `argocd.3-applications.cluster.default.base.guestbook-helm-guestbook.yaml`
+#### 7.1.1.2 UBI **application deployment** `argocd.3-applications.cluster.default.base.ubi-helm-ubi.yaml`
 
-This is the Argo CD application configuration `guestbook-helm-guestbook.yaml` file, which was created automaticly by our module with the `igc gitops-module` command.
+This is the Argo CD application configuration `ubi-helm-ubi.yaml` file, which was created automaticly by our module with the `igc gitops-module` command.
 
 That `payload` directory is used as the `source.path` in that `Argo CD application` configuration as you see above.
 
@@ -1088,20 +1088,20 @@ That `payload` directory is used as the `source.path` in that `Argo CD applicati
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: guestbook-helm-guestbook
+  name: ubi-helm-ubi-helm
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: guestbook
+    namespace: ubi-helm
     server: https://kubernetes.default.svc
   project: 3-applications
   source:
-    path: payload/3-applications/namespace/guestbook/helm-guestbook
-    repoURL: https://github.com/thomassuedbroecker/iascable-gitops-guestbook.git
+    path: payload/3-applications/namespace/ubi-helm/ubi-helm
+    repoURL: https://github.com/thomassuedbroecker/iascable-gitops-ubi.git
     targetRevision: main
     helm:
-      releaseName: helm-guestbook
+      releaseName: ubi-helm
   syncPolicy:
     automated:
       prune: true
@@ -1113,7 +1113,7 @@ spec:
 
 That folder contains a `namespace` payload and the `helm-chart` payload. 
 
-#### 7.1.2.2 Guestbook **Namespace** in `payload.1-infrastructure.cluster.default.base`
+#### 7.1.2.2 ubi **Namespace** in `payload.1-infrastructure.cluster.default.base`
 
 In the folder `payload.1-infrastructure.cluster.default.base` we have an `ns.yaml` and `rbac.yaml`. 
 
@@ -1123,20 +1123,20 @@ In the folder `payload.1-infrastructure.cluster.default.base` we have an `ns.yam
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: guestbook
+  name: ubi
   annotations:
     argocd.argoproj.io/sync-wave: "-30"
 ---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: guestbook-operator-group
-  namespace: guestbook
+  name: ubi-operator-group
+  namespace: ubi
   annotations:
     argocd.argoproj.io/sync-wave: "-20"
 spec:
   targetNamespaces:
-    - guestbook
+    - ubi
 ---
 ```
 
@@ -1147,7 +1147,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: argocd-admin
-  namespace: guestbook
+  namespace: ubi
   annotations:
     argocd.argoproj.io/sync-wave: "-20"
 rules:
@@ -1162,7 +1162,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: argocd-admin
-  namespace: guestbook
+  namespace: ubi
   annotations:
     argocd.argoproj.io/sync-wave: "-20"
 roleRef:
@@ -1175,7 +1175,7 @@ subjects:
   name: system:serviceaccounts:openshift-gitops
 ```
 
-> Note: This configuration is reposible that our initial deployment of the guestbook application does run in a permission problem. Because we are not allowed to bind port **:80** with the permission in that namespace (OpenShift project).
+> Note: This configuration is reposible that our initial deployment of the ubi application does run in a permission problem. Because we are not allowed to bind port **:80** with the permission in that namespace (OpenShift project).
 
 ```sh
 AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.5.168. Set the 'ServerName' directive globally to suppress this message
@@ -1185,18 +1185,18 @@ no listening sockets available, shutting down
 AH00015: Unable to open logs
 ```
 
-#### 7.1.1.2 Guestbook helm **application deployment** `payload.3-applications.cluster.default.base`
+#### 7.1.1.2 ubi helm **application deployment** `payload.3-applications.cluster.default.base`
 
 
-That folder contains the **Guestbook application** `helm chart configuration` to deploy the guestbook application.
+That folder contains the **ubi application** `helm chart configuration` to deploy the ubi application.
 
-The script `scripts/create-yaml.sh` of our [module `terraform-gitops-ubi`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/blob/main/scripts/create-yaml.sh) was resposible to copy the guestbook helm-chart into the payload directory. Therefor we did the customization of that file.
+The script `scripts/create-yaml.sh` of our [module `terraform-gitops-ubi`](https://github.com/Vishal-Ramani/terraform-gitops-ubi/blob/main/scripts/create-yaml.sh) was resposible to copy the ubi helm-chart into the payload directory. Therefor we did the customization of that file.
 
 We defined the values content for the helm chart variables before in the `module.tf` file. That file `values.yaml` file is used in `Argo CD application` configuration for the parameters.
 
 ```sh
   values_content = {
-    helm_guestbook = {
+    helm_ubi = {
       // create entry
     }
   }
