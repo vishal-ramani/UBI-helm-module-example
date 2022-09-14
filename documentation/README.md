@@ -789,7 +789,7 @@ spec:
     # Install ubi
     # New custom module linked be the custom catalog
     - name: terraform-gitops-ubi
-      #  alias: terraform-gitops-ubi
+      alias: terraform-gitops-ubi
       #  version: v0.0.5
 ```
 
@@ -801,6 +801,7 @@ Use [`iascable`](https://github.com/cloud-native-toolkit/iascable) to create the
 ### Step 1: Create a `credentials.properties` file and edit the file
 
 ```sh
+cd example
 cp ./credentials.properties-template ./credentials.properties
 nano credentials.properties
 ```
