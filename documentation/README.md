@@ -77,7 +77,7 @@ iascable --version
 * Example output:
 
 ```sh
-2.17.2
+2.17.4
 ```
 
 ### 3.1.2 Install a [Multipass](https://multipass.run/) 
