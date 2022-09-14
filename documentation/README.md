@@ -751,6 +751,84 @@ CUSTOM_CATALOG=https://raw.githubusercontent.com/Vishal-Ramani/UBI-helm-module-e
 iascable build -i ibm-vpc-roks-argocd-ubi.yaml -c $BASE_CATALOG -c $CUSTOM_CATALOG
 ```
 
+### Step 3: Navigate to the `output` folder
+
+```sh
+cd output
+```
+
+### Step 3: Copy the `credentials.properties` into the `output` folder
+
+```sh
+CURRENT_PATH=$(pwd)
+cp $CURRENT_PATH/../credentials.properties $CURRENT_PATH/credentials.properties
+```
+
+##### Step 6: Map the current folder to the Multpass cli-tools VM
+
+Ensure you started the `Multipass cli-tools VM` before you execute the following command:
+
+```sh
+multipass mount $PWD cli-tools:/automation
+```
+
+#### 3.1.2 Terminal inside the `cli-tools VM`
+
+Now we have mapped the `output` folder to the `cli-tools VM`. We can use the installed [`CLI tools`](https://github.com/cloud-native-toolkit/image-cli-tools) inside the `cli-tools VM` to apply the Terraform code. 
+
+> All changes we made in with `cli-tools VM` will be saved in the mapped `output` folder on our local machine.
+
+
+##### Step 1: Open the interactive shell
+
+```sh
+multipass shell cli-tools
+```
+
+* Example output:
+
+```sh
+Last login: Mon Sep 12 18:06:24 2022 from 192.168.64.1
+ubuntu@cli-tools:~$ 
+```
+
+##### Step 2: In the virtual machine navigate to the automation folder
+
+```sh
+cd ../../automation
+ls
+```
+
+##### Step 3: Source the `credentials.properties` as environment variables and show one variable
+
+```sh
+source credentials.properties
+echo $TF_VAR_login_user
+```
+
+##### Step 4: Now navigate to the `example` folder
+
+```sh
+cd example/
+ls
+```
+
+##### Step 5: Execute apply.sh
+
+```sh
+sh apply.sh
+```
+
+##### Step 6: Enter `yes` to apply the Terraform code
+
+```sh
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value:
+```
+
 
 
 #### Step 4: Start the `launch.sh script`

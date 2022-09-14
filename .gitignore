@@ -27,8 +27,6 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
-example/01/example-variable.yaml
-documentation/.DS_Store
 documentation/.DS_Store
 credentials.properties
 .DS_Store
