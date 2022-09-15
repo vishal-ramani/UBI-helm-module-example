@@ -438,11 +438,8 @@ Example relevant extract from a `BOM` -> `version: v0.0.5`
     # Install terraform-gitops-ubi
     # New custom module linked be the custom catalog
     - name: terraform-gitops-ubi
-      # alias: terraform-gitops-ubi
-      #  version: v0.0.5
-      # variables:
-      #  - name: namespace_name
-      #    value: "helm-terraform-gitops-ubi"
+      alias: terraform-gitops-ubi
+      version: v0.0.5
 ```
 
 You can follow the step to create a GitHub tag is that [example blog post](https://suedbroecker.net/2022/05/09/how-to-create-a-github-tag-for-your-last-commit/) and then create a release.
