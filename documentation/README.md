@@ -1018,7 +1018,7 @@ The new `iascable-gitops-ubi` repository contains two folders the following imag
 
 ![](images/develop-own-module-03.png)
 
-* **payload** folder which contains the current helm deployment for the **apps** which will be deployed. The following image show the deployment created by `apps` in our case the helm-ubi 
+* **payload** folder which contains the current helm deployment for the **apps** which will be deployed. The following image show the deployment created by `apps` in our case the ubi-helm. 
 
 The following image shows the newly created GitHub `iascable-gitops-ubi` repository.
 
@@ -1059,7 +1059,7 @@ We have two `Argo CD` application configurations:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: namespace-ubi
+  name: namespace-ubi-helm
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -1068,7 +1068,7 @@ spec:
     server: https://kubernetes.default.svc
   project: 1-infrastructure
   source:
-    path: payload/1-infrastructure/namespace/ubi/namespace
+    path: payload/1-infrastructure/namespace/ubi-helm/namespace
     repoURL: https://github.com/thomassuedbroecker/iascable-gitops-ubi.git
     targetRevision: main
   syncPolicy:
@@ -1080,7 +1080,7 @@ spec:
 
 #### 7.1.1.2 UBI **application deployment** `argocd.3-applications.cluster.default.base.ubi-helm-ubi.yaml`
 
-This is the Argo CD application configuration `ubi-helm-ubi.yaml` file, which was created automaticly by our module with the `igc gitops-module` command.
+This is the Argo CD application configuration `ubi-helm-ubi-helm.yaml` file, which was created automaticly by our module with the `igc gitops-module` command.
 
 That `payload` directory is used as the `source.path` in that `Argo CD application` configuration as you see above.
 
@@ -1173,16 +1173,6 @@ subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
   name: system:serviceaccounts:openshift-gitops
-```
-
-> Note: This configuration is reposible that our initial deployment of the ubi application does run in a permission problem. Because we are not allowed to bind port **:80** with the permission in that namespace (OpenShift project).
-
-```sh
-AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.5.168. Set the 'ServerName' directive globally to suppress this message
-(13)Permission denied: AH00072: make_sock: could not bind to address [::]:80
-(13)Permission denied: AH00072: make_sock: could not bind to address 0.0.0.0:80
-no listening sockets available, shutting down
-AH00015: Unable to open logs
 ```
 
 #### 7.1.1.2 ubi helm **application deployment** `payload.3-applications.cluster.default.base`
