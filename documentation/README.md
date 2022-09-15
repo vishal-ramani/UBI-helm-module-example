@@ -160,18 +160,23 @@ In that section we will modify files in our newly created repository. These are 
 
 * Add `cluster_type = var.cluster_type == "kubernetes" ? "kubernetes" : "openshift"` to the `locals`
 
-```sh
+* Resulting `locals section` in the `main.tf` file
+
+```json
 locals {
-  name          = "my-helm-chart-folder"
+  name          = "ubi-helm"
   bin_dir       = module.setup_clis.bin_dir
   yaml_dir      = "${path.cwd}/.tmp/${local.name}/chart/${local.name}"
   service_url   = "http://${local.name}.${var.namespace}"
+  cluster_type = var.cluster_type == "kubernetes" ? "kubernetes" : "openshift"
   values_content = {
-    helm_ubihelm = {
-      // create entry
+    ubi-helm= {
+      "replicaCount": 1
+      "image.repository" = "registry.access.redhat.com/ubi8/ubi"
+      "image.tag" = "latest"
     }
   }
-  layer = "services"
+  layer = "applications"
   type  = "base"
   application_branch = "main"
   namespace = var.namespace
