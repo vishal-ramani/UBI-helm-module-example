@@ -992,12 +992,6 @@ Provide a value for 'namespace_name':
 > ubi-helm
 ```
 
-#### Step 7: Open Argo CD in OpenShift and verify the application instances
-
-Follow the steps in the shown in the `gif`.
-
-![](images/develop-own-module-12.gif)
-
 #### Step 7: Verify the output of terraform execution
 
 After some time you should get following output:
@@ -1005,6 +999,18 @@ After some time you should get following output:
 ```sh
 Apply complete! Resources: 103 added, 0 changed, 0 destroyed.
 ```
+
+#### Step 8: Open Argo CD in OpenShift and verify the application instances
+
+Follow the steps in the shown in the `gif`.
+
+![](images/develop-own-module-12.gif)
+
+#### Step 9: Access the UBI pod in OpenShift and execute `ls` in the terminal
+
+Follow the steps in the shown in the `gif`.
+
+![](images/develop-own-module-13.gif)
 
 ## 7. Verify the created Argo CD configuration on GitHub
 
