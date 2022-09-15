@@ -944,12 +944,13 @@ Do you want to perform these actions?
   Enter a value:
 ```
 
-* Interactive output:
+### Step 13: Interactive terminal actions
+  
+These values you need to edit:
 
   * Namespace: `ubi-helm`
   * Region: `eu-de`
   * Resource group: `default`
-  * Common tag: `["tsuedro"]`
   * gitops-repo_token: `XXX`
 
 ```sh
@@ -980,7 +981,7 @@ Provide a value for 'ibm-ocp-vpc_flavor':
 > (bx2.4x16) 
 Provide a value for 'common_tags':
   Common tags that should be added to the instance
-> ([]) ["tsuedro"]
+> ([])
 Provide a value for 'ibm-vpc-subnets__count':
   The number of subnets that should be provisioned
 > (1) 
@@ -992,7 +993,7 @@ Provide a value for 'namespace_name':
 > ubi-helm
 ```
 
-#### Step 7: Verify the output of terraform execution
+#### Step 14: Verify the output of terraform execution
 
 After some time you should get following output:
 
@@ -1000,13 +1001,13 @@ After some time you should get following output:
 Apply complete! Resources: 103 added, 0 changed, 0 destroyed.
 ```
 
-#### Step 8: Open Argo CD in OpenShift and verify the application instances
+#### Step 15: Open Argo CD in OpenShift and verify the application instances
 
 Follow the steps in the shown in the `gif`.
 
 ![](images/develop-own-module-12.gif)
 
-#### Step 9: Access the UBI pod in OpenShift and execute `ls` in the terminal
+#### Step 16: Access the UBI pod in OpenShift and execute `ls` in the terminal
 
 Follow the steps in the shown in the `gif`.
 
@@ -1037,7 +1038,6 @@ The following image shows the newly created GitHub `iascable-gitops-ubi` reposit
 ![](images/develop-own-module-02.png)
 
 For more details visit the template of the [terraform-tools-gitops](https://github.com/cloud-native-toolkit/terraform-tools-gitops/tree/main/template) module.
-
 
 
 ### 7.1 Understand how the `ubi module content` was pasted into the new `iascable-gitops-ubi` repository
