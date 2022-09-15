@@ -2,12 +2,23 @@
 
 ## 1. Objective
 
-The objective is to understand how to build new modules for the [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/).
+The objective is to understand how to build and use a custom module for the [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/).
 
-## 2. What does the project do?
+Therefor a `custom module` will be created in GitOps scenario to deploy a helm-chart for a example application.
 
-This project does inspect the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops).
-The repository documents how to create a module for [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/) `step-by-step` using the [ubi-helm example](https://github.com/thomassuedbroecker/ubi-helm) from the Argo CD GitHub repository.
+The `custom module`  will be deployed on a Red Hat OpenShift cluster on IBM Cloud with Argo CD configured for GitOps.
+
+## 2. What does the repository do?
+
+* This repository does `inspect` the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops).
+
+* The repository shows how to `create a custom module` for [`Technology Zone Accelerator Toolkit`](https://modules.cloudnativetoolkit.dev/) `step-by-step` using the [ubi-helm example](https://github.com/thomassuedbroecker/ubi-helm) from the Argo CD GitHub repository.
+
+* The repository shows how to use a `custom module` in a [`BOM`(Bill of material)](https://github.com/cloud-native-toolkit/iascable#bom-spec)
+
+* The repository shows how to create and use a `custom catalog` for a `custom module`
+
+* The repository shows and inspects usage of a `custom module`  
 
 ### 2.1 Understand the [template-terraform-gitops](https://github.com/cloud-native-toolkit/template-terraform-gitops)
 
