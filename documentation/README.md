@@ -1123,21 +1123,20 @@ In the folder `payload.1-infrastructure.cluster.default.base` we have an `ns.yam
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ubi
+  name: ubi-helm
   annotations:
     argocd.argoproj.io/sync-wave: "-30"
 ---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: ubi-operator-group
-  namespace: ubi
+  name: ubi-helm-operator-group
+  namespace: ubi-helm
   annotations:
     argocd.argoproj.io/sync-wave: "-20"
 spec:
   targetNamespaces:
-    - ubi
----
+    - ubi-helm
 ```
 
 * `rbac.yaml`
@@ -1147,7 +1146,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: argocd-admin
-  namespace: ubi
+  namespace: ubi-helm
   annotations:
     argocd.argoproj.io/sync-wave: "-20"
 rules:
@@ -1162,7 +1161,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: argocd-admin
-  namespace: ubi
+  namespace: ubi-helm
   annotations:
     argocd.argoproj.io/sync-wave: "-20"
 roleRef:
@@ -1186,7 +1185,7 @@ We defined the values content for the helm chart variables before in the `module
 
 ```sh
   values_content = {
-    helm_ubi = {
+    ubi-hrlm = {
       // create entry
     }
   }
