@@ -1197,13 +1197,13 @@ We defined the values content for the helm chart variables before in the `module
 
 ```sh
   values_content = {
-    ubi-hrlm = {
+    ubi-helm = {
       // create entry
     }
   }
 ```
 
-The following gif shows the relation of the configuration.
+The following gif shows the relation of the parameter configuration for the helm-chart
 
 ![](images/develop-own-module-06.gif)
 
