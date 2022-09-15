@@ -1053,7 +1053,7 @@ Let's take a look a the created `Argo CD application configurations`
 
 We have two `Argo CD` application configurations:
 
-#### 7.1.1.1 ubi **Namespace** in `argocd.1-infrastructure.cluster.default.base.namespace.yaml`
+#### 7.1.1.1 ubi **Namespace** in `argocd.1-infrastructure.cluster.default.base.namespace-ubi-helm.yaml`
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
