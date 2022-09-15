@@ -992,6 +992,12 @@ Provide a value for 'namespace_name':
 > ubi-helm
 ```
 
+#### Step 7: Open Argo CD in OpenShift and verify the application instances
+
+Follow the steps in the shown in the `gif`.
+
+![](images/develop-own-module-12.gif)
+
 #### Step 7: Verify the output of terraform execution
 
 After some time you should get following output:
