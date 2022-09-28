@@ -75,5 +75,7 @@ spec:
     # Install ubi
     # New custom module linked be the custom catalog
     - name: terraform-gitops-ubi
-      alias: terraform-gitops-ubi
-      version: v0.0.2
+      version: v0.0.7
+      variables:
+        - name: command
+          value: "echo 'helloworld'"
