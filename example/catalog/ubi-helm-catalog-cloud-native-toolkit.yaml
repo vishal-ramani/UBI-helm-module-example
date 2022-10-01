@@ -21,7 +21,7 @@ categories:
               - kubernetes
               - ocp3
               - ocp4
-            version: v0.0.2
+            version: v0.0.11
             dependencies:
               - id: gitops
                 refs:
@@ -123,6 +123,10 @@ categories:
               - name: cluster_type
                 description: The cluster type (openshift or kubernetes)
                 default: '"openshift"'
+              - name: command
+                type: string
+                description: "command to run in container"
+                default: "echo 'hello world'"           
             outputs:
               - name: name
                 description: The name of the module
