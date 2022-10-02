@@ -21,7 +21,7 @@ categories:
               - kubernetes
               - ocp3
               - ocp4
-            version: v0.0.11
+            version: v0.0.12
             dependencies:
               - id: gitops
                 refs:
